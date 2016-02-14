@@ -4,3 +4,4 @@ lucene
 **.jar
 /*.csv
 nyc_data
+**.ipynb_checkpoints
