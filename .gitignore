@@ -1,0 +1,6 @@
+lucene
+otp
+**.swp
+**.jar
+/*.csv
+nyc_data
