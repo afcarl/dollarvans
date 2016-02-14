@@ -24,8 +24,9 @@ req.setMaxTimeSec(30000)
 req.setModes('WALK,TRANSIT')
 
 # The file points.csv contains the columns GEOID, X and Y.
-start = otp.loadCSVPopulation('data/csv/start.csv', 'lat', 'lon') 
-end = otp.loadCSVPopulation('data/csv/end.csv', 'lat', 'lon')
+#start = otp.loadCSVPopulation('data/csv/start.csv', 'lat', 'lon') 
+#end = otp.loadCSVPopulation('data/csv/end.csv', 'lat', 'lon')
+tracts = otp.loadCSVPopulation('data/csv/nyc_tract_centers.csv', 'lat', 'lon')
 
 # Create a CSV output
 matrixCsv = otp.createCSVOutput()
@@ -34,7 +35,7 @@ matrixCsv.setHeader(['o_code', 'd_code', 'walk_dist', 'travel_seconds'])
 
 print 'starting analysis'
 # Start Loop
-for origin in start:
+for origin in tracts:
     print origin
     # print "Processing origin: ", origin
     req.setOrigin(origin)
@@ -44,22 +45,22 @@ for origin in start:
         continue
 
     # Evaluate the SPT for all points
-    result = spt.eval(end)
+    result = spt.eval(tracts)
     #o_loc = spt.getSnappedOrigin()
     #o_lat = o_loc.getLat()
     #o_lon = o_loc.getLon()
   
-  # Add a new row of result in the CSV output
-    print result
+    # Add a new row of result in the CSV output
+    #print result
     for r in result:
-        print dir(r)
+        #print dir(r)
         #resIndv = r.getIndividual()
         #d_loc = resIndv.getSnappedLocation()
         #matrixCsv.addRow([ origin.getStringData('blk_num'), o_lat, o_lon, resIndv.getStringData('blk_num'), d_loc.getLat(), d_loc.getLon(), r.getWalkDistance(), r.getTime(), r.getBoardings()])
-        matrixCsv.addRow([ origin.getStringData('blk_num'), r.getIndividual().getStringData('blk_num'), r.getWalkDistance(), r.getTime()])
+        matrixCsv.addRow([ origin.getStringData('tract'), r.getIndividual().getStringData('tract'), r.getWalkDistance(), r.getTime()])
 
 # Save the result
-matrixCsv.save('test_block_traveltime_v2.csv')
+matrixCsv.save('time_matrix.csv')
 
 # Stop timing the code
 print("Elapsed time was %g seconds" % (time.time() - start_time))
