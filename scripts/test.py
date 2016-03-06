@@ -20,7 +20,7 @@ router = otp.getRouter('nyc')
 req = otp.createRequest()
 req.setDateTime(2016, 2, 17, 8, 00, 00)
 # req.setArriveBy(True) # this active makes router.plan() through an error at "org.opentripplanner.routing.impl.StreetVertexIndexServiceImpl.getSampleVertexAt(StreetVertexIndexServiceImpl.java:597)"
-req.setMaxTimeSec(30000)
+req.setMaxTimeSec(300000)
 req.setModes('WALK,TRANSIT')
 
 # The file points.csv contains the columns GEOID, X and Y.
@@ -58,6 +58,9 @@ for origin in tracts:
         #d_loc = resIndv.getSnappedLocation()
         #matrixCsv.addRow([ origin.getStringData('blk_num'), o_lat, o_lon, resIndv.getStringData('blk_num'), d_loc.getLat(), d_loc.getLon(), r.getWalkDistance(), r.getTime(), r.getBoardings()])
         matrixCsv.addRow([ origin.getStringData('tract'), r.getIndividual().getStringData('tract'), r.getWalkDistance(), r.getTime()])
+        
+    del spt
+    del result
 
 # Save the result
 matrixCsv.save('time_matrix.csv')
