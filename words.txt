@@ -1,0 +1,51 @@
+Commute Time Data
+=================
+
+The commute time data was created by using Open Trip Planner, New York City
+transportation network data and Longitudinal Employer-Household Dynamics (LODES)
+data.  Open Trip Planner is an open source project which can calculate travel
+times between two points for a variety of modes.  It was configured with
+GTFS data for New York City buses, subways, railroad and ferries as well as road
+network data from Open Street Maps.  Once configured, the public transit commute
+time between the center of each census tract in New York City was calculated.
+Finally, LODES data was used to calculate a single weighted average commute time
+for each census tract, X, by multiplying the commute time between X and every
+other census tract, Y, by the number of commuters who commute between X and Y,
+then divided by the total number of workers who live in X.  So this metric takes
+into account the level of transit service as well as the proximity to jobs.
+
+City-wide Predictive Model
+==========================
+
+After understanding what drives demand for dollar vans, we also wanted to see
+if there are other parts of the city that also meet that demand. To do that,
+we built a predictive model using support vector machines to learn how to
+classify dollar van origins and destinations.  The algorithm was provided
+commute time, demographic and jobs data as input and a flag indicating whether
+the tract was either an origin or destination for dollar vans.  We divided the
+2160 census tracts in New York City into 66% training and 33% test set.
+
+For origins, the model correctly classified 94% of the actual dollar van origins
+in the training set and 80% for the test set. For places that are not actually
+dollar van origins, the model identified 20% of the training set and 24% of the
+test set, which we could interpret as places where there could potentially be
+demand for dollar vans.  The map below shows the results when the model is run
+on all the census tracts:
+
+<Insert picture>
+
+For destinations, the model correctly classified 100% of the actual dollar van destinations
+in the training set and 74% for the test set. For places that are not actually
+dollar van destinations, the model identified 23% of the training set and 25% of the
+test set, which we could interpret as places where there could potentially be
+demand for dollar vans to run to.  The map below shows the results when the model is run
+on all the census tracts:
+
+<Insert picture>
+
+The model identifies places in Flatbush, centered around Utica and Eastern
+Parkway as potential destinations.  This is a destination for current dollar
+vans because of the subway line there, but this gets at a flaw in our method of
+choosing how to draw the boundaries for origins/destinations because the area
+as a whole is not much of a destination.  But the model picks up on that and
+suggests other areas around there may also be destinations.
