@@ -25,3 +25,11 @@ Start OTP by running the following from the root of the repository:
 Now scripts can be run by executing the following:
 
     curl --form "scriptfile=@scripts/test.py" localhost:8080/otp/scripting/run
+
+## Credits
+
+Done by Maxwell "The Honorable" Feinglass, Jiheng Huang, Jeremy Neiman and Vipassana Vijayarangan, graduate students at NYU CUSP.
+
+## License
+
+Licensed under the WTFPL.
